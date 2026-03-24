@@ -1336,17 +1336,23 @@ function pfUI.api.GetColoredTimeString(remaining)
 
     return color_day .. round(remaining / 86400) .. "|rd"
 
-  -- Show hours if remaining is > 99 Minutes (99 * 60)
-  elseif remaining > 5940 then
+  -- Show hours if remaining is > 60 Minutes (60 * 60)
+  elseif remaining > 3600 then
     if not color_hour then
       local r,g,b,a = pfUI.api.GetStringColor(C.appearance.cd.hourcolor)
       color_hour = pfUI.api.rgbhex(r,g,b)
     end
 
-    return color_hour .. round(remaining / 3600) .. "|rh"
+    --return color_hour .. round(remaining / 3600) .. "|rh"
+    --add text format for hhmm
+    if not color_minute then
+      local r,g,b,a = pfUI.api.GetStringColor(C.appearance.cd.minutecolor)
+      color_minute = pfUI.api.rgbhex(r,g,b)
+    end
+    return color_hour .. round(remaining / 3600) .. "|rh" .. color_minute .. round(remaining/60-60)
 
-  -- Show minutes if remaining is > 99 Seconds (99)
-  elseif remaining > 99 then
+  -- Show minutes if remaining is > 60 Seconds (60)
+  elseif remaining > 60 then
     if not color_minute then
       local r,g,b,a = pfUI.api.GetStringColor(C.appearance.cd.minutecolor)
       color_minute = pfUI.api.rgbhex(r,g,b)
