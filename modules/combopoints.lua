@@ -23,54 +23,54 @@ pfUI:RegisterModule("combopoints", "vanilla:tbc", function ()
     pfUI.combopoints[point]:Hide()
 
     --create frames for CPbackdrop, CPring, CPspark
-	  pfUI.CPbackdrop[point] = CreateFrame("Frame", "pfCPbackdrop" .. point, UIParent)
-	  pfUI.CPbackdrop[point]:SetWidth(combo_width)
+	pfUI.CPbackdrop[point] = CreateFrame("Frame", "pfCPbackdrop" .. point, UIParent)
+	pfUI.CPbackdrop[point]:SetWidth(combo_width)
     pfUI.CPbackdrop[point]:SetHeight(combo_height)
-	  pfUI.CPbackdrop[point]:Hide()
+	pfUI.CPbackdrop[point]:Hide()
 	
-	  pfUI.CPring[point] = CreateFrame("Frame", "pfCPring" .. point, UIParent)
-	  pfUI.CPring[point]:SetWidth(combo_width+2)
+	pfUI.CPring[point] = CreateFrame("Frame", "pfCPring" .. point, UIParent)
+	pfUI.CPring[point]:SetWidth(combo_width+2)
     pfUI.CPring[point]:SetHeight(combo_height+2)
-	  pfUI.CPring[point]:Hide()
+	pfUI.CPring[point]:Hide()
       
     pfUI.CPspark[point] = CreateFrame("Frame", "pfCPspark" .. point, UIParent)
-	  pfUI.CPspark[point]:SetWidth(combo_width-8)
+	pfUI.CPspark[point]:SetWidth(combo_width-8)
     pfUI.CPspark[point]:SetHeight(combo_height-5)
-	  pfUI.CPspark[point]:Hide()
+	pfUI.CPspark[point]:Hide()
 
     if pfUI.uf.target then
       pfUI.combopoints[point]:SetPoint("TOPLEFT", pfUI.uf.target, "TOPRIGHT", border*3, -(point - 1) * (combo_height + border*3))
       --set location for CPbackdrop, CPring, CPspark
-	    pfUI.CPbackdrop[point]:SetPoint("CENTER", UIParent, "CENTER", (point - 3) * (combo_width + border*3), -62 )
-	    pfUI.CPring[point]:SetPoint("CENTER", UIParent, "CENTER", (point - 3) * (combo_width + border*3), -62 )
-	    pfUI.CPspark[point]:SetPoint("CENTER", UIParent, "CENTER", (point - 3) * (combo_width + border*3) -1.5, -61 )
+	  pfUI.CPbackdrop[point]:SetPoint("CENTER", UIParent, "CENTER", (point - 3) * (combo_width + border*3), -62 )
+	  pfUI.CPring[point]:SetPoint("CENTER", UIParent, "CENTER", (point - 3) * (combo_width + border*3), -62 )
+	  pfUI.CPspark[point]:SetPoint("CENTER", UIParent, "CENTER", (point - 3) * (combo_width + border*3) -1.5, -61 )
     else
       pfUI.combopoints[point]:SetPoint("CENTER", UIParent, "CENTER", (point - 3) * (combo_width + border*3), 10 )
       --set location for CPbackdrop, CPring
-	    pfUI.CPbackdrop[point]:SetPoint("CENTER", UIParent, "CENTER", (point - 3) * (combo_width + border*3), 10 )
-	    pfUI.CPring[point]:SetPoint("CENTER", UIParent, "CENTER", (point - 3) * (combo_width + border*3), 10 )
+	  pfUI.CPbackdrop[point]:SetPoint("CENTER", UIParent, "CENTER", (point - 3) * (combo_width + border*3), 10 )
+	  pfUI.CPring[point]:SetPoint("CENTER", UIParent, "CENTER", (point - 3) * (combo_width + border*3), 10 )
     end
 
     --pfUI.combopoints[point].tex = pfUI.combopoints[point]:CreateTexture("OVERLAY")
     pfUI.combopoints[point].tex = pfUI.combopoints[point]:CreateTexture("BACKGROUND")--change strata to background
     pfUI.combopoints[point].tex:SetAllPoints(pfUI.combopoints[point])
     --set new texture for combopoint
-	  pfUI.combopoints[point].tex:SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura45")
+	pfUI.combopoints[point].tex:SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura45")
 	
-	  --set textures for CPbackdrop, CPring, CPspark
-	  pfUI.CPbackdrop[point].tex = pfUI.CPbackdrop[point]:CreateTexture("BACKGROUND")
+	--set textures for CPbackdrop, CPring, CPspark
+	pfUI.CPbackdrop[point].tex = pfUI.CPbackdrop[point]:CreateTexture("BACKGROUND")
     pfUI.CPbackdrop[point].tex:SetAllPoints(pfUI.CPbackdrop[point])
-	  pfUI.CPbackdrop[point].tex:SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura72")
-	  pfUI.CPbackdrop[point].tex:SetVertexColor(0, 0, 0, .5)
+	pfUI.CPbackdrop[point].tex:SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura72")
+	pfUI.CPbackdrop[point].tex:SetVertexColor(0, 0, 0, .5)
 	
-	  pfUI.CPring[point].tex = pfUI.CPring[point]:CreateTexture("BORDER")
+	pfUI.CPring[point].tex = pfUI.CPring[point]:CreateTexture("BORDER")
     pfUI.CPring[point].tex:SetAllPoints(pfUI.CPring[point])
-	  pfUI.CPring[point].tex:SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura73")
+	pfUI.CPring[point].tex:SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura73")
 	
-	  pfUI.CPspark[point].tex = pfUI.CPspark[point]:CreateTexture("BORDER")
+	pfUI.CPspark[point].tex = pfUI.CPspark[point]:CreateTexture("BORDER")
     pfUI.CPspark[point].tex:SetAllPoints(pfUI.CPspark[point])
-	  pfUI.CPspark[point].tex:SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura22")
-	  pfUI.CPspark[point].tex:SetBlendMode("ADD")
+	pfUI.CPspark[point].tex:SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura22")
+	pfUI.CPspark[point].tex:SetBlendMode("ADD")
 
     UpdateMovable(pfUI.combopoints[point])
     --no backdrop or shadow
@@ -80,57 +80,57 @@ pfUI:RegisterModule("combopoints", "vanilla:tbc", function ()
 
   function pfUI.combopoints:DisplayNum(num)
     --set color for combatpoints and CPspark
-	  if num == 1 then
-	    for point=1, num do
-		    pfUI.combopoints[point].tex:SetVertexColor(1, .851, 0, 1)
-		    pfUI.CPspark[point].tex:SetVertexColor(.5, .5, .5, .8)
+	if num == 1 then
+	  for point=1, num do
+		pfUI.combopoints[point].tex:SetVertexColor(1, .851, 0, 1)
+		pfUI.CPspark[point].tex:SetVertexColor(.5, .5, .5, .8)
       end
-	  elseif num == 2 then
-	    for point=1, num do
+	elseif num == 2 then
+	  for point=1, num do
         pfUI.combopoints[point].tex:SetVertexColor(.961, .671, 0, 1)
-		    pfUI.CPspark[point].tex:SetVertexColor(.55, .55, .55, .85)
+		pfUI.CPspark[point].tex:SetVertexColor(.55, .55, .55, .85)
       end
-	  elseif num == 3 then
-	    for point=1, num do
+	elseif num == 3 then
+	  for point=1, num do
         pfUI.combopoints[point].tex:SetVertexColor(.902, .490, 0, 1)
-		    pfUI.CPspark[point].tex:SetVertexColor(.6, .6, .6, .9)
+		pfUI.CPspark[point].tex:SetVertexColor(.6, .6, .6, .9)
       end
-	  elseif num == 4 then
-	    for point=1, num do
+	elseif num == 4 then
+	  for point=1, num do
         pfUI.combopoints[point].tex:SetVertexColor(.820, .306, 0, 1)
-		    pfUI.CPspark[point].tex:SetVertexColor(.65, .65, .65, .95)
+		pfUI.CPspark[point].tex:SetVertexColor(.65, .65, .65, .95)
       end
-	  elseif num == 5 then
-	    for point=1, num do
-        pfUI.combopoints[point].tex:SetVertexColor(.718, .043, .055, 1)
-		    pfUI.CPspark[point].tex:SetVertexColor(.7, .7, .7, 1)
+	elseif num == 5 then
+	  for point=1, num do
+		pfUI.combopoints[point].tex:SetVertexColor(.718, .043, .055, 1)
+		pfUI.CPspark[point].tex:SetVertexColor(.7, .7, .7, 1)
       end
-	  end
+	end
 	
-	  if UnitCanAttack("player", "target") and UnitIsDead("target") == nil then
-	    --show and color ACTIVE combo points
-  	  for point=1, num do
-        pfUI.combopoints[point]:Show()
+	if UnitCanAttack("player", "target") and UnitIsDead("target") == nil then
+	  --show and color ACTIVE combo points
+	  for point=1, num do
+		pfUI.combopoints[point]:Show()
   	    pfUI.CPbackdrop[point]:Hide()
-  		  pfUI.CPring[point].tex:SetVertexColor(.66, .66, .66, .95)
-  		  pfUI.CPring[point]:Show()
-  		  pfUI.CPspark[point]:Show()
+  		pfUI.CPring[point].tex:SetVertexColor(.66, .66, .66, .95)
+  		pfUI.CPring[point]:Show()
+  		pfUI.CPspark[point]:Show()
       end
   	  --show and color INACTIVE combo points
       for point=num+1, 5 do
         pfUI.combopoints[point]:Hide()
   	    pfUI.CPbackdrop[point]:Show()
-  		  pfUI.CPring[point].tex:SetVertexColor(.33, .33, .33, .8)
-  		  pfUI.CPring[point]:Show()
-  		  pfUI.CPspark[point]:Hide()
+  		pfUI.CPring[point].tex:SetVertexColor(.33, .33, .33, .8)
+  		pfUI.CPring[point]:Show()
+  		pfUI.CPspark[point]:Hide()
       end
   	else
-    --hide everything if no target or target is dead
+	--hide everything if no target or target is dead
   	  for point=1, 5 do
   	    pfUI.combopoints[point]:Hide()
   	    pfUI.CPbackdrop[point]:Hide()
-  		  pfUI.CPring[point]:Hide()
-  		  pfUI.CPspark[point]:Hide()
+  		pfUI.CPring[point]:Hide()
+  		pfUI.CPspark[point]:Hide()
       end
   	end
   end
