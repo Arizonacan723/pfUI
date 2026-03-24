@@ -400,7 +400,8 @@ pfUI:RegisterModule("buff", "vanilla:tbc", function ()
     if C.buffs.textinside == "1" then
       buff.timer:SetAllPoints(buff)
     else
-      buff.timer:SetPoint("TOP", buff, "BOTTOM", 0, -3)
+      --buff.timer:SetPoint("TOP", buff, "BOTTOM", 0, -3)
+      buff.timer:SetPoint("TOP", buff, "BOTTOM", 0, 0)
     end
   end
 
@@ -408,7 +409,8 @@ pfUI:RegisterModule("buff", "vanilla:tbc", function ()
     local fontsize = C.buffs.fontsize == "-1" and C.global.font_size or C.buffs.fontsize
 
     pfUI.buff.buffs:SetWidth(tonumber(C.buffs.buffrowsize) * (tonumber(C.buffs.size)+2*tonumber(C.buffs.spacing)))
-    pfUI.buff.buffs:SetHeight(ceil(32/tonumber(C.buffs.buffrowsize)) * ((C.buffs.textinside == "1" and 0 or (fontsize*1.5))+tonumber(C.buffs.size)+2*tonumber(C.buffs.spacing)))
+    --pfUI.buff.buffs:SetHeight(ceil(32/tonumber(C.buffs.buffrowsize)) * ((C.buffs.textinside == "1" and 0 or (fontsize*1.5))+tonumber(C.buffs.size)+2*tonumber(C.buffs.spacing)))
+    pfUI.buff.buffs:SetHeight(ceil(16/tonumber(C.buffs.buffrowsize)) * ((C.buffs.textinside == "1" and 0 or (fontsize*1.5))+tonumber(C.buffs.size)+2*tonumber(C.buffs.spacing)))
     pfUI.buff.buffs:SetPoint("TOPRIGHT", pfUI.minimap or UIParent, "TOPLEFT", -4*tonumber(C.buffs.spacing), 0)
     UpdateMovable(pfUI.buff.buffs)
 
