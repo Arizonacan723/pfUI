@@ -1349,7 +1349,7 @@ function pfUI.api.GetColoredTimeString(remaining)
       local r,g,b,a = pfUI.api.GetStringColor(C.appearance.cd.minutecolor)
       color_minute = pfUI.api.rgbhex(r,g,b)
     end
-    return color_hour .. round(remaining / 3600) .. "|rh" .. color_minute .. round(remaining/60-60)
+    return color_hour .. floor(remaining / 3600) .. "|rh" .. color_minute .. round(remaining/60-60)
 
   -- Show minutes if remaining is > 60 Seconds (60)
   elseif remaining > 60 then
