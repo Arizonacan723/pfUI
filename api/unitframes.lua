@@ -869,7 +869,8 @@ function pfUI.uf:UpdateConfig()
   f.powerRightText:SetPoint("BOTTOMRIGHT",f.power.bar, "BOTTOMRIGHT", -2*(default_border + f.config.txtpowerrightoffx), f.config.txtpowerrightoffy)
 
   f.powerCenterText:SetFontObject(GameFontWhite)
-  f.powerCenterText:SetFont(fontname, fontsize, fontstyle)
+  --f.powerCenterText:SetFont(fontname, fontsize, fontstyle)
+  f.powerCenterText:SetFont(fontname, fontsize - 4, fontstyle)--reduce font size
   f.powerCenterText:SetJustifyH("CENTER")
   f.powerCenterText:ClearAllPoints()
   f.powerCenterText:SetPoint("TOPLEFT",f.power.bar, "TOPLEFT", f.config.txtpowercenteroffx, 1 + tonumber(f.config.txtpowercenteroffy))
@@ -966,7 +967,8 @@ function pfUI.uf:UpdateConfig()
       f.buffs[i].texture:SetTexCoord(.08, .92, .08, .92)
       f.buffs[i].texture:SetAllPoints()
       f.buffs[i].stacks = f.buffs[i].stacks or f.buffs[i]:CreateFontString(nil, "OVERLAY", f.buffs[i])
-      f.buffs[i].stacks:SetFont(pfUI.font_unit, C.global.font_unit_size, "OUTLINE")
+      --f.buffs[i].stacks:SetFont(pfUI.font_unit, C.global.font_unit_size, "OUTLINE")
+      f.buffs[i].stacks:SetFont(pfUI.font_unit, C.global.font_unit_size - 4, "OUTLINE")--reduce font size
       f.buffs[i].stacks:SetPoint("BOTTOMRIGHT", f.buffs[i], 2, -2)
       f.buffs[i].stacks:SetJustifyH("LEFT")
       f.buffs[i].stacks:SetShadowColor(0, 0, 0)
@@ -988,12 +990,21 @@ function pfUI.uf:UpdateConfig()
         af = "TOPLEFT"
       elseif f.config.buffs == "TOPRIGHT" then
         invert_h = 1
-        invert_v = -1
+        --invert_v = -1
+        invert_v = 1--undo vertical invert
         af = "BOTTOMRIGHT"
       elseif f.config.buffs == "BOTTOMRIGHT" then
         invert_h = -1
         invert_v = -1
         af = "TOPRIGHT"
+      end
+
+      --local variables to change buff position/spacing here
+      local hofs = 0
+      local vofs = 0
+      if f.config.buffs == "TOPRIGHT" then
+        hofs = f.config.buffsize + 1 + 8--last number is spacing from frame
+        vofs = -(f.config.buffsize + 2)
       end
 
       local anchor = f.config.portraitheight ~= "-1" and f.hp or f
@@ -1002,8 +1013,10 @@ function pfUI.uf:UpdateConfig()
       end
       local multiply = C.appearance.border.force_blizz == "1" and 1 or 2
       f.buffs[i]:SetPoint(af, anchor, f.config.buffs,
-      invert_v * (i-1-row*perrow)*(multiply*default_border + f.config.buffsize + 1),
-      invert_h * (row*(multiply*default_border + f.config.buffsize + 1) + (multiply*default_border + 1)))
+      --invert_v * (i-1-row*perrow)*(multiply*default_border + f.config.buffsize + 1),
+      --invert_h * (row*(multiply*default_border + f.config.buffsize + 1) + (multiply*default_border + 1)))
+      invert_v * (i-1-row*perrow)*(multiply*default_border + f.config.buffsize + 3) + hofs,
+      invert_h * (row*(multiply*default_border + f.config.buffsize + 1) + (multiply*default_border + 1)) + vofs)
 
       f.buffs[i]:SetWidth(f.config.buffsize)
       f.buffs[i]:SetHeight(f.config.buffsize)
@@ -2170,6 +2183,10 @@ function pfUI.uf:RefreshUnit(unit, component)
     local bperrow = unit.config.buffperrow
     local selfdebuff = unit.config.selfdebuff
 
+    --local variables to change debuff position/spacing for target
+    local loffset = -(unit.config.debuffsize + 1 + 8)--last number is spacing from frame
+    local doffset = -4
+
     local invert_h, invert_v, af
     if unit.config.debuffs == "TOPLEFT" then
       invert_h = 1
@@ -2181,7 +2198,8 @@ function pfUI.uf:RefreshUnit(unit, component)
       af = "TOPLEFT"
     elseif unit.config.debuffs == "TOPRIGHT" then
       invert_h = 1
-      invert_v = -1
+      --invert_v = -1
+      invert_v = -1--undo vertical invert
       af = "BOTTOMRIGHT"
     elseif unit.config.debuffs == "BOTTOMRIGHT" then
       invert_h = -1
@@ -2214,8 +2232,10 @@ function pfUI.uf:RefreshUnit(unit, component)
         end
         local multiply = C.appearance.border.force_blizz == "1" and 1 or 2
         unit.debuffs[i]:SetPoint(af, anchor, unit.config.debuffs,
-        invert_v * (i-1-row*perrow)*(multiply*default_border + unit.config.debuffsize + 1),
-        invert_h * ((row+buffrow)*(multiply*default_border + unit.config.debuffsize + 1) + (multiply*default_border + 1)))
+        --invert_v * (i-1-row*perrow)*(multiply*default_border + unit.config.debuffsize + 1),
+        --invert_h * ((row+buffrow)*(multiply*default_border + unit.config.debuffsize + 1) + (multiply*default_border + 1)))
+        invert_v * (i-1-row*perrow)*(multiply*default_border + unit.config.debuffsize + 3) - loffset,
+        invert_h * ((row+buffrow)*(multiply*default_border + unit.config.debuffsize + 1) + (multiply*default_border + 1)) - doffset)
       end
 
       if unit.label == "player" then
@@ -3183,8 +3203,18 @@ function pfUI.uf:GetStatusValue(unit, pos)
   elseif config == "level" then
     return unit:GetColor("level") .. pfUI.uf:GetLevelString(unitstr)
   elseif config == "class" then
-    if UnitIsPlayer(unitstr) then
-      return unit:GetColor("class") .. (UnitClass(unitstr) or UNKNOWN)
+    --if UnitIsPlayer(unitstr) then
+      --return unit:GetColor("class") .. (UnitClass(unitstr) or UNKNOWN)
+    if UnitClassification(unitstr) == "rareelite" then
+      return "|cffe2e1df" .. "Rare" .. "|cfff1d56b" .. "Elite"
+    elseif UnitClassification(unitstr) == "elite" then
+      return "|cfff1d56b" .. "Elite" -- f3cc25
+    elseif UnitClassification(unitstr) == "rare" then
+      return "|cffe2e1df" .. "Rare"
+    elseif UnitIsPlayer(unitstr) and UnitIsPVP(unitstr) then
+      return "|cffb62220" .. "PvP"
+    elseif UnitCreatureType(unitstr) == "Critter" then
+      return "|cffaaaaaa" .. "Critter"
     else
       return ""
     end
