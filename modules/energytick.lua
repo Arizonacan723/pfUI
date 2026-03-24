@@ -32,7 +32,10 @@ pfUI:RegisterModule("energytick", "vanilla:tbc", function()
   energytick:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS")
 
   energytick:SetScript("OnEvent", function()
-    if UnitPowerType("player") == 0 and C.unitframes.player.manatick == "1" then
+    --hide ticks when mana/energy is 100%
+    if UnitMana("player") == UnitManaMax("player") then
+      this:Hide()
+    elseif UnitPowerType("player") == 0 and C.unitframes.player.manatick == "1" then
       this.mode = "MANA"
       this:Show()
     elseif UnitPowerType("player") == 3 and C.unitframes.player.energy == "1" then
