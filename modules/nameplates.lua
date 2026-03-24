@@ -849,7 +849,7 @@ nameplates:RegisterEvent("ZONE_CHANGED_NEW_AREA")
     local plate_width = C.nameplates.width + 50
     local plate_height = C.nameplates.heighthealth + font_size + 5
     local plate_height_cast = C.nameplates.heighthealth + font_size + 5 + C.nameplates.heightcast + 5
-    local combo_size = 5
+    local combo_size = (C.nameplates.width-default_border*12)/5--combo point size relative to nameplate width
 
     local width = tonumber(C.nameplates.width)
     local debuffsize = tonumber(C.nameplates.debuffsize)
@@ -883,8 +883,9 @@ nameplates:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 
     CreateBackdrop(nameplate.health, default_border)
 
-    nameplate.health.text:SetFont(font, font_size - 2, "OUTLINE")
+    nameplate.health.text:SetFont(font, font_size - 5, "OUTLINE")--reduce health text size by 3
     nameplate.health.text:SetJustifyH(C.nameplates.hptextpos)
+    nameplate.health.text:SetShadowOffset(0, 0)--add shadow to health text
 
     nameplate.guild:SetFont(font, font_size, font_style)
 
@@ -904,8 +905,8 @@ nameplates:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 
     for i=1,5 do
       nameplate.combopoints[i]:SetWidth(combo_size)
-      nameplate.combopoints[i]:SetHeight(combo_size)
-      nameplate.combopoints[i]:SetPoint("TOPRIGHT", nameplate.health, "BOTTOMRIGHT", -(i-1)*(combo_size+default_border*3), -default_border*3)
+      nameplate.combopoints[i]:SetHeight(combo_size - 12)--reduce combo point height by 12
+      nameplate.combopoints[i]:SetPoint("TOPLEFT", nameplate.health, "BOTTOMLEFT", -(i-1)*(combo_size+default_border*3), -default_border*3)--change to LEFT
       CreateBackdrop(nameplate.combopoints[i], default_border)
     end
 
@@ -921,7 +922,7 @@ nameplates:RegisterEvent("ZONE_CHANGED_NEW_AREA")
     nameplate.castbar.icon:SetPoint("BOTTOMLEFT", nameplate.castbar, "BOTTOMRIGHT", default_border*3, 0)
     nameplate.castbar.icon:SetPoint("TOPLEFT", nameplate.health, "TOPRIGHT", default_border*3, 0)
     nameplate.castbar.icon:SetWidth(C.nameplates.heightcast + default_border*3 + C.nameplates.heighthealth)
-    CreateBackdrop(nameplate.castbar.icon, default_border)
+    CreateBackdrop(nameplate.castbar.icon, 0)--change border size to 0
 
     nameplates:OnDataChanged(nameplate)
   end
