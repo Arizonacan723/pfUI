@@ -63,6 +63,15 @@ pfUI:RegisterModule("actionbar", "vanilla", function ()
       txt = string.gsub(txt, _G[string.format("%s%s", mod, "BUTTON5")], "MB5")
       txt = string.gsub(txt, _G[string.format("%s%s", mod, "MOUSEWHEELDOWN")], "MWD")
       txt = string.gsub(txt, _G[string.format("%s%s", mod, "MOUSEWHEELUP")], "MWU")
+      --additional keybind abbreviations
+      txt = string.gsub(txt, _G[string.format("%s%s", mod, "NUMPAD1")], "N1")
+      txt = string.gsub(txt, _G[string.format("%s%s", mod, "NUMPAD2")], "N2")
+      txt = string.gsub(txt, _G[string.format("%s%s", mod, "NUMPAD3")], "N3")
+      txt = string.gsub(txt, _G[string.format("%s%s", mod, "NUMPAD4")], "N4")
+      txt = string.gsub(txt, _G[string.format("%s%s", mod, "NUMPAD5")], "N5")
+      txt = string.gsub(txt, _G[string.format("%s%s", mod, "NUMPAD7")], "N7")
+      txt = string.gsub(txt, _G[string.format("%s%s", mod, "LEFT")], "5")
+      txt = string.gsub(txt, _G[string.format("%s%s", mod, "RIGHT")], "6")
     end
     return txt
   end
@@ -1223,8 +1232,16 @@ pfUI:RegisterModule("actionbar", "vanilla", function ()
 
     -- keybind options
     if showkybind == "1" then f.keybind:Show() else f.keybind:Hide() end
-    SetAllPointsOffset(f.keybind, f, font_offset, -font_offset)
-    f.keybind:SetFont(font, bind_size, "OUTLINE")
+    --SetAllPointsOffset(f.keybind, f, font_offset, -font_offset)
+    SetAllPointsOffset(f.keybind, f, font_offset, -font_offset)--reduce font size
+    --f.keybind:SetFont(font, bind_size, "OUTLINE")
+    --Lucas: change font size for certain bars
+    --3 = right, 4 = vertical, 5 = left, 6 = top, 9 = stance3, 10 = stance4
+    if bar == 3 or bar == 5 or bar == 9 or bar == 10 then
+      f.keybind:SetFont(font, bind_size - 2, "OUTLINE")
+    else
+      f.keybind:SetFont(font, bind_size, "OUTLINE")
+    end
     f.keybind:SetTextColor(unpack(bind_color))
     f.keybind:SetJustifyH("RIGHT")
     f.keybind:SetJustifyV("TOP")
@@ -1235,7 +1252,8 @@ pfUI:RegisterModule("actionbar", "vanilla", function ()
     SetAllPointsOffset(f.count, f, font_offset, -font_offset)
     f.count:SetFont(font, count_size, "OUTLINE")
     f.count:SetTextColor(unpack(count_color))
-    f.count:SetJustifyH("RIGHT")
+    --f.count:SetJustifyH("RIGHT")
+    f.count:SetJustifyH("LEFT")--change to left justified
     f.count:SetJustifyV("BOTTOM")
 
     -- macro spell scan (disabled when macro addons are loaded)
