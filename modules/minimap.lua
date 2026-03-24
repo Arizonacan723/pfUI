@@ -155,13 +155,15 @@ pfUI:RegisterModule("minimap", "vanilla:tbc", function ()
   elseif C.appearance.minimap.coordsloc == "bottomright" then
     pfUI.minimapCoordinates:SetPoint("BOTTOMRIGHT", -3, 3)
   else
-    pfUI.minimapCoordinates:SetPoint("BOTTOMLEFT", 3, 3)
+    --pfUI.minimapCoordinates:SetPoint("BOTTOMLEFT", 3, 3)
+    pfUI.minimapCoordinates:SetPoint("BOTTOMLEFT", 0, -1)--change coords location
   end
 
   pfUI.minimapCoordinates:SetHeight(C.global.font_size)
   pfUI.minimapCoordinates:SetWidth(Minimap:GetWidth())
   pfUI.minimapCoordinates.text = pfUI.minimapCoordinates:CreateFontString("MinimapCoordinatesText", "LOW", "GameFontNormal")
-  pfUI.minimapCoordinates.text:SetFont(pfUI.font_default, C.global.font_size, "OUTLINE")
+  --pfUI.minimapCoordinates.text:SetFont(pfUI.font_default, C.global.font_size, "OUTLINE")
+  pfUI.minimapCoordinates.text:SetFont(pfUI.font_default, C.global.font_size - 2, "OUTLINE")--reduce font size by 2
   pfUI.minimapCoordinates.text:SetTextColor(1,1,1,1)
   pfUI.minimapCoordinates.text:SetAllPoints(pfUI.minimapCoordinates)
 
@@ -181,11 +183,13 @@ pfUI:RegisterModule("minimap", "vanilla:tbc", function ()
   pfUI.minimapZone = CreateFrame("Frame", "pfMinimapZone", pfUI.minimap)
   pfUI.minimapZone:RegisterEvent("MINIMAP_ZONE_CHANGED")
   pfUI.minimapZone:RegisterEvent("PLAYER_ENTERING_WORLD")
-  pfUI.minimapZone:SetPoint("TOP", 0, -3)
+  --pfUI.minimapZone:SetPoint("TOP", 0, -3)
+  pfUI.minimapZone:SetPoint("TOP", 0, 2)--change zone text location
   pfUI.minimapZone:SetHeight(C.global.font_size + 2)
   pfUI.minimapZone:SetWidth(Minimap:GetWidth())
   pfUI.minimapZone.text = pfUI.minimapZone:CreateFontString("minimapZoneText", "LOW", "GameFontNormal")
-  pfUI.minimapZone.text:SetFont(pfUI.font_default, C.global.font_size + 2, "OUTLINE")
+  --pfUI.minimapZone.text:SetFont(pfUI.font_default, C.global.font_size + 2, "OUTLINE")
+  pfUI.minimapZone.text:SetFont(pfUI.font_default, C.global.font_size - 1, "OUTLINE")--reduce zone text font size
   pfUI.minimapZone.text:SetAllPoints(pfUI.minimapZone)
   pfUI.minimapZone.text:SetJustifyH("CENTER")
 
@@ -217,24 +221,25 @@ pfUI:RegisterModule("minimap", "vanilla:tbc", function ()
     pfUI.minimapZone:Show()
   end
 
+  --Disable hover event
   -- Minimap hover event
   -- Update and toggle showing of coordinates and zone text on mouse enter/leave
-  Minimap:SetScript("OnEnter", function()
-    if C.appearance.minimap.coordstext ~= "off" then
-      pfUI.minimapCoordinates:Show()
-    end
-    if C.appearance.minimap.zonetext ~= "off" then
-      pfUI.minimapZone:Show()
-    end
-  end)
-  Minimap:SetScript("OnLeave", function()
-    if C.appearance.minimap.coordstext ~= "on" then
-      pfUI.minimapCoordinates:Hide()
-    end
-    if C.appearance.minimap.zonetext ~= "on" then
-      pfUI.minimapZone:Hide()
-    end
-  end)
+  -- Minimap:SetScript("OnEnter", function()
+    -- if C.appearance.minimap.coordstext ~= "off" then
+      -- pfUI.minimapCoordinates:Show()
+    -- end
+    -- if C.appearance.minimap.zonetext ~= "off" then
+      -- pfUI.minimapZone:Show()
+    -- end
+  -- end)
+  -- Minimap:SetScript("OnLeave", function()
+    -- if C.appearance.minimap.coordstext ~= "on" then
+      -- pfUI.minimapCoordinates:Hide()
+    -- end
+    -- if C.appearance.minimap.zonetext ~= "on" then
+      -- pfUI.minimapZone:Hide()
+    -- end
+  -- end)
 
   pfUI.minimap.pvpicon = CreateFrame("Frame", nil, pfUI.minimap)
   pfUI.minimap.pvpicon:Hide()
