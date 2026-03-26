@@ -17,7 +17,6 @@ pfUI:RegisterModule("combopoints", "vanilla:tbc", function ()
 
   for point = 1, 5 do
     pfUI.combopoints[point] = CreateFrame("Frame", "pfCombo" .. point, UIParent)
-    pfUI.combopoints[point]:SetFrameStrata("HIGH")
     pfUI.combopoints[point]:SetWidth(combo_width)
     pfUI.combopoints[point]:SetHeight(combo_height)
     pfUI.combopoints[point]:Hide()
