@@ -989,9 +989,8 @@ function pfUI.uf:UpdateConfig()
         invert_v = 1
         af = "TOPLEFT"
       elseif f.config.buffs == "TOPRIGHT" then
-        invert_h = 1
-        --invert_v = -1
-        invert_v = 1--undo vertical invert
+        invert_h = -1--change invert_h to grow right
+        invert_v = 1--change invert_v to grow down
         af = "BOTTOMRIGHT"
       elseif f.config.buffs == "BOTTOMRIGHT" then
         invert_h = -1
@@ -1000,11 +999,11 @@ function pfUI.uf:UpdateConfig()
       end
 
       --local variables to change buff position/spacing here
-      local hofs = 0
-      local vofs = 0
+      local buffs_h_offset = 0
+      local buffs_v_offset = 0
       if f.config.buffs == "TOPRIGHT" then
-        hofs = f.config.buffsize + 1 + 8--last number is spacing from frame
-        vofs = -(f.config.buffsize + 2)
+        buffs_h_offset = f.config.buffsize + 1 + 8--last number is spacing from right edge of frame
+        buffs_v_offset = -f.config.buffsize + 3
       end
 
       local anchor = f.config.portraitheight ~= "-1" and f.hp or f
@@ -1013,10 +1012,8 @@ function pfUI.uf:UpdateConfig()
       end
       local multiply = C.appearance.border.force_blizz == "1" and 1 or 2
       f.buffs[i]:SetPoint(af, anchor, f.config.buffs,
-      --invert_v * (i-1-row*perrow)*(multiply*default_border + f.config.buffsize + 1),
-      --invert_h * (row*(multiply*default_border + f.config.buffsize + 1) + (multiply*default_border + 1)))
-      invert_v * (i-1-row*perrow)*(multiply*default_border + f.config.buffsize + 3) + hofs,
-      invert_h * (row*(multiply*default_border + f.config.buffsize + 1) + (multiply*default_border + 1)) + vofs)
+      invert_v * (i-1-row*perrow)*(multiply*default_border + f.config.buffsize + 3) + buffs_h_offset,
+      invert_h * (row*(multiply*default_border + f.config.buffsize + 1) + (multiply*default_border + 1)) + buffs_v_offset)
 
       f.buffs[i]:SetWidth(f.config.buffsize)
       f.buffs[i]:SetHeight(f.config.buffsize)
