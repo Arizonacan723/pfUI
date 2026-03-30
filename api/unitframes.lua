@@ -978,22 +978,22 @@ function pfUI.uf:UpdateConfig()
       f.buffs[i]:RegisterForClicks("RightButtonUp")
       f.buffs[i]:ClearAllPoints()
 
-      local invert_h, invert_v, af
+      local invert_x, invert_y, af
       if f.config.buffs == "TOPLEFT" then
-        invert_h = 1
-        invert_v = 1
+        invert_x = 1--grow right
+        invert_y = -1--grow up
         af = "BOTTOMLEFT"
       elseif f.config.buffs == "BOTTOMLEFT" then
-        invert_h = -1
-        invert_v = 1
+        invert_x = 1--grow right
+        invert_y = -1--grow down
         af = "TOPLEFT"
       elseif f.config.buffs == "TOPRIGHT" then
-        invert_h = 1
-        invert_v = -1
+        invert_x = -1--grow left
+        invert_y = 1--grow up
         af = "BOTTOMRIGHT"
       elseif f.config.buffs == "BOTTOMRIGHT" then
-        invert_h = -1
-        invert_v = -1
+        invert_x = -1--grow left
+        invert_y = -1--grow down
         af = "TOPRIGHT"
       end
 
@@ -1003,8 +1003,8 @@ function pfUI.uf:UpdateConfig()
       end
       local multiply = C.appearance.border.force_blizz == "1" and 1 or 2
       f.buffs[i]:SetPoint(af, anchor, f.config.buffs,
-      invert_v * (i-1-row*perrow)*(multiply*default_border + f.config.buffsize + 1),
-      invert_h * (row*(multiply*default_border + f.config.buffsize + 1) + (multiply*default_border + 1)))
+      invert_x * (i-1-row*perrow)*(multiply*default_border + f.config.buffsize + f.config.buffspacing) + f.config.buffoffx,
+      invert_y * (row*(multiply*default_border + f.config.buffsize + f.config.buffspacing) + (multiply*default_border + 1)) + f.config.buffoffy)
 
       f.buffs[i]:SetWidth(f.config.buffsize)
       f.buffs[i]:SetHeight(f.config.buffsize)
@@ -2181,22 +2181,22 @@ function pfUI.uf:RefreshUnit(unit, component)
     local bperrow = unit.config.buffperrow
     local selfdebuff = unit.config.selfdebuff
 
-    local invert_h, invert_v, af
+    local invert_x, invert_y, af
     if unit.config.debuffs == "TOPLEFT" then
-      invert_h = 1
-      invert_v = 1
+      invert_x = 1--grow right
+      invert_y = 1--grow up
       af = "BOTTOMLEFT"
     elseif unit.config.debuffs == "BOTTOMLEFT" then
-      invert_h = -1
-      invert_v = 1
+      invert_x = 1--grow right
+      invert_y = -1--grow down
       af = "TOPLEFT"
     elseif unit.config.debuffs == "TOPRIGHT" then
-      invert_h = 1
-      invert_v = -1
+      invert_x = -1--grow left
+      invert_y = 1--grow up
       af = "BOTTOMRIGHT"
     elseif unit.config.debuffs == "BOTTOMRIGHT" then
-      invert_h = -1
-      invert_v = -1
+      invert_x = -1--grow left
+      invert_y = -1--grow down
       af = "TOPRIGHT"
     end
 
@@ -2225,8 +2225,8 @@ function pfUI.uf:RefreshUnit(unit, component)
         end
         local multiply = C.appearance.border.force_blizz == "1" and 1 or 2
         unit.debuffs[i]:SetPoint(af, anchor, unit.config.debuffs,
-        invert_v * (i-1-row*perrow)*(multiply*default_border + unit.config.debuffsize + 1),
-        invert_h * ((row+buffrow)*(multiply*default_border + unit.config.debuffsize + 1) + (multiply*default_border + 1)))
+        invert_x * (i-1-row*perrow)*(multiply*default_border + unit.config.debuffsize + unit.config.debuffspacing) + unit.config.debuffoffx,
+        invert_y * ((row+buffrow)*(multiply*default_border + unit.config.debuffsize + unit.config.debuffspacing) + (multiply*default_border + 1)) + unit.config.debuffoffy)
       end
 
       if unit.label == "player" then

@@ -880,7 +880,7 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
         "MONOCHROME:" .. T["Monochrome"],
       },
       ["spacing"] = {
-        "0:0" .. T["None"],
+        "0:0 " .. T["(None)"],
         "1:1 " .. T["Pixel"],
         "2:2 " .. T["Pixel"],
         "3:3 " .. T["Pixel"],
@@ -2339,14 +2339,20 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
 
         CreateConfig(U[c], T["Buffs"], nil, nil, "header")
         CreateConfig(U[c], T["Buff Position"], C.unitframes[c], "buffs", "dropdown", pfUI.gui.dropdowns.uf_buff_position)
+        CreateConfig(U[c], T["Buff Position X-Offset"], C.unitframes[c], "buffoffx")
+        CreateConfig(U[c], T["Buff Position Y-Offset"], C.unitframes[c], "buffoffy")
         CreateConfig(U[c], T["Buff Size"], C.unitframes[c], "buffsize")
+        CreateConfig(U[c], T["Buff Spacing"], C.unitframes[c], "buffspacing", "dropdown", pfUI.gui.dropdowns.spacing)
         CreateConfig(U[c], T["Buff Limit"], C.unitframes[c], "bufflimit")
         CreateConfig(U[c], T["Buffs Per Row"], C.unitframes[c], "buffperrow")
 
         CreateConfig(U[c], T["Debuffs"], nil, nil, "header")
         CreateConfig(U[c], T["Debuff Position"], C.unitframes[c], "debuffs", "dropdown", pfUI.gui.dropdowns.uf_buff_position)
-        CreateConfig(U[c], T["Debuff Size"], C.unitframes[c], "debuffsize")
-        CreateConfig(U[c], T["Debuff Limit"], C.unitframes[c], "debufflimit")
+        CreateConfig(U[c], T["Buff Position X-Offset"], C.unitframes[c], "debuffoffx")
+		    CreateConfig(U[c], T["Buff Position Y-Offset"], C.unitframes[c], "debuffoffy")
+		    CreateConfig(U[c], T["Debuff Size"], C.unitframes[c], "debuffsize")
+        CreateConfig(U[c], T["Buff Spacing"], C.unitframes[c], "debuffspacing", "dropdown", pfUI.gui.dropdowns.spacing)
+		    CreateConfig(U[c], T["Debuff Limit"], C.unitframes[c], "debufflimit")
         CreateConfig(U[c], T["Debuffs Per Row"], C.unitframes[c], "debuffperrow")
 
         if c ~= "player" then
