@@ -1331,8 +1331,8 @@ local color_day, color_hour, color_minute, color_low, color_normal
 function pfUI.api.GetColoredTimeString(remaining)
   if not remaining then return "" end
 
-  -- Show days if remaining is > 99 Hours (99 * 60 * 60)
-  if remaining > 356400 then
+  -- Show days if remaining is above threshold
+  if remaining > tonumber(C.appearance.cd.daythreshold)*60*60 then
     if not color_day then
       local r,g,b,a = pfUI.api.GetStringColor(C.appearance.cd.daycolor)
       color_day = pfUI.api.rgbhex(r,g,b)
@@ -1340,41 +1340,45 @@ function pfUI.api.GetColoredTimeString(remaining)
 
     return color_day .. round(remaining / 86400) .. "|rd"
 
-  -- Show hours if remaining is > 99 Minutes (99 * 60)
-  elseif remaining > 5940 then
+  -- Show hours if remaining is above threshold
+  elseif remaining > tonumber(C.appearance.cd.hourthreshold)*60 then
     if not color_hour then
       local r,g,b,a = pfUI.api.GetStringColor(C.appearance.cd.hourcolor)
       color_hour = pfUI.api.rgbhex(r,g,b)
     end
 
-    return color_hour .. round(remaining / 3600) .. "|rh"
+	if C.appearance.cd.hoursminutes == "1" then
+	  if not color_minute then
+        local r,g,b,a = pfUI.api.GetStringColor(C.appearance.cd.minutecolor)
+        color_minute = pfUI.api.rgbhex(r,g,b)
+	  end
+	  return color_hour .. floor(remaining / 3600) .. "|rh" .. color_minute .. round(remaining/60-60)
+	else
+	  return color_hour .. round(remaining / 3600) .. "|rh"
+	end
 
-  -- Show minutes if remaining is > 99 Seconds (99)
-  elseif remaining > 99 then
+  -- Show minutes if remaining is above threshold
+  elseif remaining > tonumber(C.appearance.cd.minutethreshold) then
     if not color_minute then
       local r,g,b,a = pfUI.api.GetStringColor(C.appearance.cd.minutecolor)
       color_minute = pfUI.api.rgbhex(r,g,b)
     end
 
-    return color_minute .. round(remaining / 60) .. "|rm"
+    return color_minute .. floor(remaining / 60) .. "|rm"
 
-  -- Show milliseconds on low
-  elseif remaining <= 5 and pfUI_config.appearance.cd.milliseconds == "1" then
+  -- Color for low timer threshold
+  elseif remaining <= tonumber(C.appearance.cd.lowthreshold) then
     if not color_low then
       local r,g,b,a = pfUI.api.GetStringColor(C.appearance.cd.lowcolor)
       color_low = pfUI.api.rgbhex(r,g,b)
     end
 
-    return color_low .. string.format("%.1f", round(remaining,1))
-
-  -- Show seconds on low
-  elseif remaining <= 5 then
-    if not color_low then
-      local r,g,b,a = pfUI.api.GetStringColor(C.appearance.cd.lowcolor)
-      color_low = pfUI.api.rgbhex(r,g,b)
-    end
-
-    return color_low .. round(remaining)
+    -- Show milliseconds if checked
+	if pfUI_config.appearance.cd.milliseconds == "1" then
+	  return color_low .. string.format("%.1f", round(remaining,1))
+	else
+	  return color_low .. floor(remaining)
+	end
 
   -- Show seconds on normal
   elseif remaining >= 0 then
@@ -1382,7 +1386,7 @@ function pfUI.api.GetColoredTimeString(remaining)
       local r, g, b, a = pfUI.api.GetStringColor(C.appearance.cd.normalcolor)
       color_normal = pfUI.api.rgbhex(r,g,b)
     end
-    return color_normal .. round(remaining)
+    return color_normal .. math.ceil(remaining)
 
   -- Return empty
   else
