@@ -3279,6 +3279,14 @@ function pfUI.uf:GetStatusValue(unit, pos)
     end
   elseif config == "powerminmax" then
     return unit:GetColor("power") .. pfUI.api.Abbreviate(mp) .. "/" .. pfUI.api.Abbreviate(mpmax)
+  
+  -- attack speed/dmg
+  if config == "attackspeed" then
+    local mainSpeed, offSpeed = UnitAttackSpeed("target")
+    return unit:GetColor("unit") .. format("Spd: %.2f", mainSpeed) 
+  elseif config == "attackdmg" then
+    local lowDmg, hiDmg, offlowDmg = UnitDamage("target")
+    return unit:GetColor("unit") .. format("Dmg: %.0f - %.0f", lowDmg, hiDmg)
   else
     return ""
   end

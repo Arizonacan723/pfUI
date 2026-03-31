@@ -1086,6 +1086,8 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
         "powerperc:" .. T["Mana - Percentage"],
         "powermiss:" .. T["Mana - Missing"],
         "powerminmax:" .. T["Mana - Min/Max"],
+        "attackspeed:" .. T["Attack Speed"],
+        "attackdmg:" .. T["Min/Max Damage"],
       },
       ["hpformat"] = {
         "percent:" .. T["Percent"],
