@@ -3196,27 +3196,9 @@ function pfUI.uf:GetStatusValue(unit, pos)
     return unit:GetColor("unit") .. strsub(UnitName(unitstr), 0, 3)
   elseif config == "level" then
     return unit:GetColor("level") .. pfUI.uf:GetLevelString(unitstr)
-  elseif config == "pclass" then
+  elseif config == "class" then
     if UnitIsPlayer(unitstr) then
       return unit:GetColor("class") .. (UnitClass(unitstr) or UNKNOWN)
-    else
-      return ""
-    end
-  elseif config == "cclass" then
-    if UnitIsPlayer(unitstr) and UnitIsPVP(unitstr) then
-      return "|cffb62220" .. "PvP"
-    elseif UnitClassification(unitstr) ~= "normal" then
-      if UnitClassification(unitstr) == "rareelite" then
-        return "|cffe2e1df" .. "Rare" .. "|cfff1d56b" .. "Elite"
-      elseif UnitClassification(unitstr) == "elite" then
-        return "|cfff1d56b" .. "Elite"
-      elseif UnitClassification(unitstr) == "rare" then
-        return "|cffe2e1df" .. "Rare"
-      elseif UnitClassification(unitstr) == "worldboss" then
-        return "|cffb3cbe4" .. "World Boss"
-      end
-    elseif UnitCreatureType(unitstr) == "Critter" then
-      return "|cffaaaaaa" .. "Critter"
     else
       return ""
     end
