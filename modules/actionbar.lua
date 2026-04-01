@@ -53,27 +53,25 @@ pfUI:RegisterModule("actionbar", "vanilla", function ()
     if f.Hide then f:Hide() end
   end
 
-  -- include additional keybind abbreviations
+  -- also abbreviate mouse buttons
   local OrigGetBindingText = GetBindingText
   local function GetBindingText(msg, mod, abbrev)
     local txt = OrigGetBindingText(msg, mod, abbrev)
     if abbrev then
-      -- mouse buttons
       txt = string.gsub(txt, _G[string.format("%s%s", mod, "BUTTON3")], "MB3")
       txt = string.gsub(txt, _G[string.format("%s%s", mod, "BUTTON4")], "MB4")
       txt = string.gsub(txt, _G[string.format("%s%s", mod, "BUTTON5")], "MB5")
       txt = string.gsub(txt, _G[string.format("%s%s", mod, "MOUSEWHEELDOWN")], "MWD")
       txt = string.gsub(txt, _G[string.format("%s%s", mod, "MOUSEWHEELUP")], "MWU")
-      -- numpad 1-9
+      --additional keybind abbreviations
       txt = string.gsub(txt, _G[string.format("%s%s", mod, "NUMPAD1")], "N1")
       txt = string.gsub(txt, _G[string.format("%s%s", mod, "NUMPAD2")], "N2")
       txt = string.gsub(txt, _G[string.format("%s%s", mod, "NUMPAD3")], "N3")
       txt = string.gsub(txt, _G[string.format("%s%s", mod, "NUMPAD4")], "N4")
       txt = string.gsub(txt, _G[string.format("%s%s", mod, "NUMPAD5")], "N5")
-      txt = string.gsub(txt, _G[string.format("%s%s", mod, "NUMPAD6")], "N6")
       txt = string.gsub(txt, _G[string.format("%s%s", mod, "NUMPAD7")], "N7")
-      txt = string.gsub(txt, _G[string.format("%s%s", mod, "NUMPAD8")], "N8")
-      txt = string.gsub(txt, _G[string.format("%s%s", mod, "NUMPAD9")], "N9")
+      txt = string.gsub(txt, _G[string.format("%s%s", mod, "LEFT")], "5")
+      txt = string.gsub(txt, _G[string.format("%s%s", mod, "RIGHT")], "6")
     end
     return txt
   end
@@ -1082,33 +1080,43 @@ pfUI:RegisterModule("actionbar", "vanilla", function ()
       end
     end)
   end
-
+  
   local function CreateActionButton(parent, bar, button)
     -- load config
     local size = C.bars["bar"..bar].icon_size
-    local font = pfUI.media[C.bars.font]
-    local font_offset = tonumber(C.bars.font_offset)
+	
+    local keybind_font = pfUI.media[C.bars.keybind_font]
+	local keybind_style = C.bars.keybind_style
+	local keybind_align = C.bars.keybind_align
+    local keybind_color = { strsplit(",", C.bars.keybind_color) }
+	local keybind_size = tonumber(C.bars["bar"..bar].keybind_size)
+	local keybind_offset = tonumber(C.bars["bar"..bar].keybind_offset)
 
-    local macro_size = tonumber(C.bars.macro_size)
-    local macro_color = { strsplit(",", C.bars.macro_color) }
+    local macro_font = pfUI.media[C.bars.macro_font]
+	local macro_style = C.bars.macro_style
+	local macro_align = C.bars.macro_align
+	local macro_color = { strsplit(",", C.bars.macro_color) }
+	local macro_size = tonumber(C.bars["bar"..bar].macro_size)
+	local macro_offset = tonumber(C.bars["bar"..bar].macro_offset)
 
-    local count_size = tonumber(C.bars.count_size)
-    local count_color = { strsplit(",", C.bars.count_color) }
+    local count_font = pfUI.media[C.bars.count_font]
+	local count_style = C.bars.count_style
+	local count_align = C.bars.count_align
+	local count_color = { strsplit(",", C.bars.count_color) }
+	local count_size = tonumber(C.bars["bar"..bar].count_size)
+	local count_offset = tonumber(C.bars["bar"..bar].count_offset)
 
-    local bind_size = tonumber(C.bars.bind_size)
-    local bind_color = { strsplit(",", C.bars.bind_color) }
-
-    local cd_size = tonumber(C.bars.cd_size)
+    local cd_size = tonumber(C.bars["bar"..bar].cd_size)
 
     local showempty = C.bars["bar"..bar].showempty
-    local showmacro = C.bars["bar"..bar].showmacro
-    local showkybind = C.bars["bar"..bar].showkeybind
+    local showkeybind = C.bars["bar"..bar].showkeybind
+	local showmacro = C.bars["bar"..bar].showmacro
     local showcount = C.bars["bar"..bar].showcount
 
     -- sanitize font sizes
-    if macro_size == 0 then macro_size = 1 end
-    if count_size == 0 then macro_size = 1 end
-    if bind_size == 0 then macro_size = 1 end
+    if keybind_size == 0 then keybind_size = 1 end
+	if macro_size == 0 then macro_size = 1 end
+    if count_size == 0 then count_size = 1 end
     if cd_size == 0 then cd_size = nil end
 
     local button_name = "pfActionBar" .. barnames[bar] .. "Button" .. button
@@ -1181,11 +1189,11 @@ pfUI:RegisterModule("actionbar", "vanilla", function ()
         f.autocastable:SetTexCoord(.25, .75, .25, .75)
       end
 
-      -- macro
-      f.macro = f:CreateFontString(button_name .. "Name", "LOW", "GameFontNormal")
-
       -- keybind
       f.keybind = f:CreateFontString(nil, "LOW", "GameFontNormal")
+	  
+      -- macro
+      f.macro = f:CreateFontString(button_name .. "Name", "LOW", "GameFontNormal")
 
       -- itemcount
       f.count = f:CreateFontString(button_name .. "Count", "LOW", "GameFontNormal")
@@ -1224,29 +1232,29 @@ pfUI:RegisterModule("actionbar", "vanilla", function ()
       f.autocast:SetAlpha(.10)
     end
 
-    -- macro options
-    if showmacro == "1" then f.macro:Show() else f.macro:Hide() end
-    SetAllPointsOffset(f.macro, f, font_offset, -font_offset)
-    f.macro:SetFont(font, macro_size, "OUTLINE")
-    f.macro:SetTextColor(unpack(macro_color))
-    f.macro:SetJustifyH("LEFT")
-    f.macro:SetJustifyV("BOTTOM")
-
     -- keybind options
-    if showkybind == "1" then f.keybind:Show() else f.keybind:Hide() end
-    SetAllPointsOffset(f.keybind, f, font_offset, -font_offset)
-    f.keybind:SetFont(font, bind_size, "OUTLINE")
-    f.keybind:SetTextColor(unpack(bind_color))
-    f.keybind:SetJustifyH("RIGHT")
+    if showkeybind == "1" then f.keybind:Show() else f.keybind:Hide() end
+    SetAllPointsOffset(f.keybind, f, keybind_offset, -keybind_offset)
+    f.keybind:SetFont(keybind_font, keybind_size, keybind_style)
+    f.keybind:SetTextColor(unpack(keybind_color))
+    f.keybind:SetJustifyH(keybind_align)
     f.keybind:SetJustifyV("TOP")
     f.keybind:SetNonSpaceWrap(false)
+	
+	-- macro options
+    if showmacro == "1" then f.macro:Show() else f.macro:Hide() end
+    SetAllPointsOffset(f.macro, f, macro_offset, -macro_offset)
+    f.macro:SetFont(macro_font, macro_size, macro_style)
+    f.macro:SetTextColor(unpack(macro_color))
+    f.macro:SetJustifyH(macro_align)
+    f.macro:SetJustifyV("BOTTOM")
 
     -- item count options
     if showcount == "1" then f.count:Show() else f.count:Hide() end
-    SetAllPointsOffset(f.count, f, font_offset, -font_offset)
-    f.count:SetFont(font, count_size, "OUTLINE")
+    SetAllPointsOffset(f.count, f, count_offset, -count_offset)
+    f.count:SetFont(count_font, count_size, count_style)
     f.count:SetTextColor(unpack(count_color))
-    f.count:SetJustifyH("RIGHT")
+    f.count:SetJustifyH(count_align)
     f.count:SetJustifyV("BOTTOM")
 
     -- macro spell scan (disabled when macro addons are loaded)
