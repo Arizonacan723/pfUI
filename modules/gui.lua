@@ -2356,9 +2356,6 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
 		CreateConfig(U[c], T["Debuff Limit"], C.unitframes[c], "debufflimit")
         CreateConfig(U[c], T["Debuffs Per Row"], C.unitframes[c], "debuffperrow")
 
-        if c ~= "player" then
-        end
-
         CreateConfig(U[c], T["Combat/Aggro Indicators"], nil, nil, "header")
         CreateConfig(U[c], T["Display Aggro Indicator"], C.unitframes[c], "squareaggro", "checkbox")
         CreateConfig(U[c], T["Display Combat Indicator"], C.unitframes[c], "squarecombat", "checkbox")
@@ -2570,29 +2567,19 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
       CreateConfig(U["bars"], T["Lock Actionbars"], "UVAR", "LOCK_ACTIONBAR", "checkbox")
       CreateConfig(U["bars"], T["Always Allow Drag Via Shift Key"], C.bars, "shiftdrag", "checkbox")
 
-      -- CreateConfig(nil, T["Font Options"], nil, nil, "header")
-      -- CreateConfig(U["bars"], T["Font"], C.bars, "font", "dropdown", pfUI.gui.dropdowns.fonts)
-      -- CreateConfig(U["bars"], T["Font Padding"], C.bars, "font_offset")
-      -- CreateConfig(U["bars"], T["Macro Text Size"], C.bars, "macro_size")
-      -- CreateConfig(U["bars"], T["Macro Text Color"], C.bars, "macro_color", "color")
-      -- CreateConfig(U["bars"], T["Item Count Text Size"], C.bars, "count_size")
-      -- CreateConfig(U["bars"], T["Item Count Text Color"], C.bars, "count_color", "color")
-      -- CreateConfig(U["bars"], T["Keybind Text Size"], C.bars, "bind_size")
-      -- CreateConfig(U["bars"], T["Keybind Text Color"], C.bars, "bind_color", "color")
-      -- CreateConfig(nil, T["Cooldown Text Size"], C.bars, "cd_size")
-	  CreateConfig(nil, T["Font Options"], nil, nil, "header")
-	  CreateConfig(U["bars"], T["Keybind Text Font"], C.bars, "keybind_font", "dropdown", pfUI.gui.dropdowns.fonts)
-	  CreateConfig(U["bars"], T["Keybind Text Style"], C.bars, "keybind_style", "dropdown", pfUI.gui.dropdowns.fontstyle)
-	  CreateConfig(U["bars"], T["Keybind Text Alignment"], C.bars, "keybind_align", "dropdown", pfUI.gui.dropdowns.textalign)
-	  CreateConfig(U["bars"], T["Keybind Text Color"], C.bars, "keybind_color", "color")
-	  CreateConfig(U["bars"], T["Macro Text Font"], C.bars, "macro_font", "dropdown", pfUI.gui.dropdowns.fonts)
-	  CreateConfig(U["bars"], T["Macro Text Style"], C.bars, "macro_style", "dropdown", pfUI.gui.dropdowns.fontstyle)
-	  CreateConfig(U["bars"], T["Macro Text Alignment"], C.bars, "macro_align", "dropdown", pfUI.gui.dropdowns.textalign)
-	  CreateConfig(U["bars"], T["Macro Text Color"], C.bars, "macro_color", "color")
+      CreateConfig(nil, T["Font Options"], nil, nil, "header")
+      CreateConfig(U["bars"], T["Keybind Text Font"], C.bars, "keybind_font", "dropdown", pfUI.gui.dropdowns.fonts)
+      CreateConfig(U["bars"], T["Keybind Text Style"], C.bars, "keybind_style", "dropdown", pfUI.gui.dropdowns.fontstyle)
+      CreateConfig(U["bars"], T["Keybind Text Alignment"], C.bars, "keybind_align", "dropdown", pfUI.gui.dropdowns.textalign)
+      CreateConfig(U["bars"], T["Keybind Text Color"], C.bars, "keybind_color", "color")
+      CreateConfig(U["bars"], T["Macro Text Font"], C.bars, "macro_font", "dropdown", pfUI.gui.dropdowns.fonts)
+      CreateConfig(U["bars"], T["Macro Text Style"], C.bars, "macro_style", "dropdown", pfUI.gui.dropdowns.fontstyle)
+      CreateConfig(U["bars"], T["Macro Text Alignment"], C.bars, "macro_align", "dropdown", pfUI.gui.dropdowns.textalign)
+      CreateConfig(U["bars"], T["Macro Text Color"], C.bars, "macro_color", "color")
       CreateConfig(U["bars"], T["Item Count Font"], C.bars, "count_font", "dropdown", pfUI.gui.dropdowns.fonts)
-	  CreateConfig(U["bars"], T["Item Count Style"], C.bars, "count_style", "dropdown", pfUI.gui.dropdowns.fontstyle)
-	  CreateConfig(U["bars"], T["Item Count Alignment"], C.bars, "count_align", "dropdown", pfUI.gui.dropdowns.textalign)
-	  CreateConfig(U["bars"], T["Item Count Text Color"], C.bars, "count_color", "color")
+      CreateConfig(U["bars"], T["Item Count Style"], C.bars, "count_style", "dropdown", pfUI.gui.dropdowns.fontstyle)
+      CreateConfig(U["bars"], T["Item Count Alignment"], C.bars, "count_align", "dropdown", pfUI.gui.dropdowns.textalign)
+      CreateConfig(U["bars"], T["Item Count Text Color"], C.bars, "count_color", "color")
 
       CreateConfig(nil, T["Auto Paging"], nil, nil, "header")
       CreateConfig(U["bars"], T["Switch Pages On Alt Key Press"], C.bars, "pagemasteralt", "checkbox")
@@ -2635,9 +2622,11 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
 
     for _, data in pairs(barnames) do
       local id, caption = data[1], data[2]
+      
       local formfactors = function()
         return BarLayoutOptions(tonumber(C.bars["bar"..id].buttons) or id < 11 and NUM_ACTIONBAR_BUTTONS or id > 11 and NUM_SHAPESHIFT_SLOTS or NUM_PET_ACTION_SLOTS)
       end
+
       local uneven_options = function()
         local formfactor = tostring(C.bars["bar"..id].formfactor or "")
         local _, _, cols, rows = string.find(formfactor, "(%d+)%s*x%s*(%d+)")
@@ -2659,9 +2648,9 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
         if id == 12 then
           CreateConfig(U["bars"], T["Auto-Castable Action Indicator"], C.bars, "showcastable", "checkbox")
         elseif id ~= 1 and id ~= 11 then
-		  CreateConfig(U["bars"], T["Pageable"], C.bars["bar"..id], "pageable", "checkbox")
-		end
-		if id ~= 11 and id ~= 12 then
+		      CreateConfig(U["bars"], T["Pageable"], C.bars["bar"..id], "pageable", "checkbox")
+		    end
+		    if id ~= 11 and id ~= 12 then
           CreateConfig(U["bars"], T["Buttons"], C.bars["bar"..id], "buttons", "dropdown", pfUI.gui.dropdowns.actionbarbuttons)
         end
         CreateConfig(U["bars"], T["Icon Size"], C.bars["bar"..id], "icon_size")
@@ -2688,12 +2677,12 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
         CreateConfig(layout_ufunc, T["Layout"], C.bars["bar"..id], "formfactor", "dropdown", formfactors)
         uneven_frame = CreateConfig(U["bars"], T["Layout Uneven Orientation"], C.bars["bar"..id], "uneven", "dropdown", uneven_options)
         
-		CreateConfig(nil, T["Display Options"], nil, nil, "header")
-		CreateConfig(U["bars"], T["Bar Background"], C.bars["bar"..id], "background", "checkbox")
-		if id ~= 11 then
-          CreateConfig(U["bars"], T["Show Empty Buttons"], C.bars["bar"..id], "showempty", "checkbox")
+        CreateConfig(nil, T["Display Options"], nil, nil, "header")
+        CreateConfig(U["bars"], T["Bar Background"], C.bars["bar"..id], "background", "checkbox")
+        if id ~= 11 then
+		  CreateConfig(U["bars"], T["Show Empty Buttons"], C.bars["bar"..id], "showempty", "checkbox")
         end
-		CreateConfig(U["bars"], T["Enable Autohide"], C.bars["bar"..id], "autohide", "checkbox")
+        CreateConfig(U["bars"], T["Enable Autohide"], C.bars["bar"..id], "autohide", "checkbox")
         CreateConfig(U["bars"], T["Autohide Timeout"], C.bars["bar"..id], "hide_time")
         CreateConfig(U["bars"], T["Show In Combat"], C.bars["bar"..id], "hide_combat", "checkbox")
 		
