@@ -32,7 +32,9 @@ pfUI:RegisterModule("energytick", "vanilla:tbc", function()
   energytick:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS")
 
   energytick:SetScript("OnEvent", function()
-    if UnitPowerType("player") == 0 and C.unitframes.player.manatick == "1" then
+	  if C.unitframes.player.hideticksonfull and UnitMana("player") == UnitManaMax("player") then
+      this:Hide()
+	  elseif UnitPowerType("player") == 0 and C.unitframes.player.manatick == "1" then
       this.mode = "MANA"
       this:Show()
     elseif UnitPowerType("player") == 3 and C.unitframes.player.energy == "1" then
@@ -42,7 +44,7 @@ pfUI:RegisterModule("energytick", "vanilla:tbc", function()
       this:Hide()
     end
 
-    -- Filter nur eigene Energy-Gewinne von Talents/Buffs
+    -- Filter only your own Energy gains from Talents/Buffs
     if event == "CHAT_MSG_SPELL_SELF_BUFF" or event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" then
       if string.find(arg1, "You gain") and string.find(arg1, "Energy from") then
         this.ignoreNextGain = true
