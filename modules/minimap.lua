@@ -240,16 +240,25 @@ pfUI:RegisterModule("minimap", "vanilla:tbc", function ()
     end
   end)
 
+  -- pvp icon
   pfUI.minimap.pvpicon = CreateFrame("Frame", nil, pfUI.minimap)
   pfUI.minimap.pvpicon:Hide()
   pfUI.minimap.pvpicon:RegisterEvent("UPDATE_FACTION")
   pfUI.minimap.pvpicon:RegisterEvent("UNIT_FACTION")
   pfUI.minimap.pvpicon:SetFrameStrata("HIGH")
-  pfUI.minimap.pvpicon:SetWidth(16)
-  pfUI.minimap.pvpicon:SetHeight(16)
+  pfUI.minimap.pvpicon:SetWidth(C.appearance.minimap.pvpicon_size)
+  pfUI.minimap.pvpicon:SetHeight(C.appearance.minimap.pvpicon_size)
   pfUI.minimap.pvpicon:SetAlpha(.5)
   pfUI.minimap.pvpicon:SetParent(pfUI.minimap)
-  pfUI.minimap.pvpicon:SetPoint("BOTTOMRIGHT", pfUI.minimap, "BOTTOMRIGHT", -5, 5)
+  if C.appearance.minimap.pvpicon_loc == "topleft" then
+    pfUI.minimapCoordinates:SetPoint("TOPLEFT", pfUI.minimap, "TOPLEFT", C.appearance.minimap.pvpicon_offx, C.appearance.minimap.pvpicon_offy)
+  elseif C.appearance.minimap.pvpicon_loc == "topright" then
+    pfUI.minimapCoordinates:SetPoint("TOPRIGHT", pfUI.minimap, "TOPRIGHT", C.appearance.minimap.pvpicon_offx, C.appearance.minimap.pvpicon_offy)
+  elseif C.appearance.minimap.pvpicon_loc == "bottomright" then
+    pfUI.minimapCoordinates:SetPoint("BOTTOMRIGHT", pfUI.minimap, "BOTTOMRIGHT", C.appearance.minimap.pvpicon_offx, C.appearance.minimap.pvpicon_offy)
+  else
+    pfUI.minimapCoordinates:SetPoint("BOTTOMLEFT", pfUI.minimap, "BOTTOMLEFT", C.appearance.minimap.pvpicon_offx, C.appearance.minimap.pvpicon_offy)
+  end
   pfUI.minimap.pvpicon.texture = pfUI.minimap.pvpicon:CreateTexture(nil,"DIALOG")
   pfUI.minimap.pvpicon.texture:SetTexture(pfUI.media["img:pvp"])
   pfUI.minimap.pvpicon.texture:SetAllPoints(pfUI.minimap.pvpicon)
