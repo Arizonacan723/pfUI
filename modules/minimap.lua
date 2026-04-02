@@ -149,19 +149,19 @@ pfUI:RegisterModule("minimap", "vanilla:tbc", function ()
   end)
 
   if C.appearance.minimap.coordsloc == "topleft" then
-    pfUI.minimapCoordinates:SetPoint("TOPLEFT", 3, -3)
+    pfUI.minimapCoordinates:SetPoint("TOPLEFT", tonumber(C.appearance.minimap.coords_offx), tonumber(C.appearance.minimap.coords_offy))
   elseif C.appearance.minimap.coordsloc == "topright" then
-    pfUI.minimapCoordinates:SetPoint("TOPRIGHT", -3, -3)
+    pfUI.minimapCoordinates:SetPoint("TOPRIGHT", tonumber(C.appearance.minimap.coords_offx), tonumber(C.appearance.minimap.coords_offy))
   elseif C.appearance.minimap.coordsloc == "bottomright" then
-    pfUI.minimapCoordinates:SetPoint("BOTTOMRIGHT", -3, 3)
+    pfUI.minimapCoordinates:SetPoint("BOTTOMRIGHT", tonumber(C.appearance.minimap.coords_offx), tonumber(C.appearance.minimap.coords_offy))
   else
-    pfUI.minimapCoordinates:SetPoint("BOTTOMLEFT", 3, 3)
+    pfUI.minimapCoordinates:SetPoint("BOTTOMLEFT", tonumber(C.appearance.minimap.coords_offx), tonumber(C.appearance.minimap.coords_offy))
   end
 
-  pfUI.minimapCoordinates:SetHeight(C.global.font_size)
+  pfUI.minimapCoordinates:SetHeight(C.appearance.minimap.coords_size)
   pfUI.minimapCoordinates:SetWidth(Minimap:GetWidth())
   pfUI.minimapCoordinates.text = pfUI.minimapCoordinates:CreateFontString("MinimapCoordinatesText", "LOW", "GameFontNormal")
-  pfUI.minimapCoordinates.text:SetFont(pfUI.font_default, C.global.font_size, "OUTLINE")
+  pfUI.minimapCoordinates.text:SetFont(pfUI.font_default, C.appearance.minimap.coords_size, "OUTLINE")
   pfUI.minimapCoordinates.text:SetTextColor(1,1,1,1)
   pfUI.minimapCoordinates.text:SetAllPoints(pfUI.minimapCoordinates)
 
@@ -181,11 +181,15 @@ pfUI:RegisterModule("minimap", "vanilla:tbc", function ()
   pfUI.minimapZone = CreateFrame("Frame", "pfMinimapZone", pfUI.minimap)
   pfUI.minimapZone:RegisterEvent("MINIMAP_ZONE_CHANGED")
   pfUI.minimapZone:RegisterEvent("PLAYER_ENTERING_WORLD")
-  pfUI.minimapZone:SetPoint("TOP", 0, -3)
-  pfUI.minimapZone:SetHeight(C.global.font_size + 2)
+  if C.appearance.minimap.zonetext_loc == "TOP" then
+	pfUI.minimapZone:SetPoint("TOP", 0, -tonumber(C.appearance.minimap.zonetext_padding))
+  else
+	pfUI.minimapZone:SetPoint("BOTTOM", 0, tonumber(C.appearance.minimap.zonetext_padding))
+  end
+  pfUI.minimapZone:SetHeight(C.appearance.minimap.zonetext_size)
   pfUI.minimapZone:SetWidth(Minimap:GetWidth())
   pfUI.minimapZone.text = pfUI.minimapZone:CreateFontString("minimapZoneText", "LOW", "GameFontNormal")
-  pfUI.minimapZone.text:SetFont(pfUI.font_default, C.global.font_size + 2, "OUTLINE")
+  pfUI.minimapZone.text:SetFont(pfUI.font_default, C.appearance.minimap.zonetext_size, "OUTLINE")
   pfUI.minimapZone.text:SetAllPoints(pfUI.minimapZone)
   pfUI.minimapZone.text:SetJustifyH("CENTER")
 
