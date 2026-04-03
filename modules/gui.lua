@@ -1164,8 +1164,8 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
       },
       ["buff_duration_position"] = {
         "BOTTOM:" .. T["Below"],
-		    "TOP:" .. T["Above"],
-		    "CENTER:" .. T["Inside"],
+		"TOP:" .. T["Above"],
+		"CENTER:" .. T["Inside"],
       },
       ["positions"] = {
         "TOPLEFT:" .. T["Top Left"],
@@ -1622,7 +1622,7 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
 
     CreateGUIEntry(T["Settings"], T["Cooldown"], function()
       CreateConfig(nil, T["Cooldown Text Time Threshold"], C.appearance.cd, "threshold")
-	    CreateConfig(nil, T["Enable Durations On Blizzard Frames"], C.appearance.cd, "blizzard", "checkbox")
+      CreateConfig(nil, T["Enable Durations On Blizzard Frames"], C.appearance.cd, "blizzard", "checkbox")
       CreateConfig(nil, T["Enable Durations On Foreign Frames"], C.appearance.cd, "foreign", "checkbox")
       CreateConfig(nil, T["Hide Foreign Cooldown Animations"], C.appearance.cd, "hideanim", "checkbox")
       CreateConfig(nil) -- spacer
@@ -2084,13 +2084,12 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
       CreateConfig(nil, T["Portrait Alpha"], C.unitframes, "portraitalpha")
       CreateConfig(nil, T["Always Use 2D Portraits"], C.unitframes, "always2dportrait", "checkbox")
       CreateConfig(nil, T["Enable 2D Portraits As Fallback"], C.unitframes, "portraittexture", "checkbox")
-      CreateConfig(nil, T["Unit Frame Layout"], C.unitframes, "layout", "dropdown", pfUI.gui.dropdowns.uf_layout)
       CreateConfig(nil, T["Combopoint Width"], C.unitframes, "combowidth")
       CreateConfig(nil, T["Combopoint Height"], C.unitframes, "comboheight")
       CreateConfig(nil, T["Show Resting"], C.unitframes.player, "showRest", "checkbox")
       CreateConfig(nil, T["Enable Energy Ticks"], C.unitframes.player, "energy", "checkbox")
       CreateConfig(nil, T["Enable Mana Ticks"], C.unitframes.player, "manatick", "checkbox")
-	    CreateConfig(nil, T["Hide Ticks On Full Energy/Mana"], C.unitframes.player, "hideticksonfull", "checkbox")
+      CreateConfig(nil, T["Hide Ticks On Full Energy/Mana"], C.unitframes.player, "hideticksonfull", "checkbox")
       CreateConfig(nil, T["Detect Enemy Buffs"], C.unitframes, "buffdetect", "checkbox", nil, nil, nil, nil, "vanilla" )
       CreateConfig(nil, T["Raid Mark Icon Style"], C.unitframes, "blizzard_raidicons", "dropdown", function() return {"1:Original Blizzard", "0:pfUI Design"} end)
 
@@ -2255,6 +2254,9 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
 
         -- build config entries
         CreateConfig(U[c], T["Display Frame"] .. ": " .. t, C.unitframes[c], "visible", "checkbox")
+		if c == "player" or c == "target" then
+          CreateConfig(nil, t .. " " .. T["Unit Frame Layout"], C.unitframes[c], "layout", "dropdown", pfUI.gui.dropdowns.uf_layout)
+        end
         CreateConfig(U[c], T["Enable Mouseover Tooltip"], C.unitframes[c], "showtooltip", "checkbox")
         CreateConfig(U[c], T["Default Transparency"], C.unitframes[c], "alpha_visible", "dropdown", pfUI.gui.dropdowns.percent_small)
         CreateConfig(U[c], T["Out Of Range Transparency"], C.unitframes[c], "alpha_outrange", "dropdown", pfUI.gui.dropdowns.percent_small)
@@ -2346,20 +2348,20 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
 
         CreateConfig(U[c], T["Buffs"], nil, nil, "header")
         CreateConfig(U[c], T["Buff Position"], C.unitframes[c], "buffs", "dropdown", pfUI.gui.dropdowns.uf_buff_position)
-		    CreateConfig(U[c], T["Buff Position X-Offset"], C.unitframes[c], "buffoffx")
-		    CreateConfig(U[c], T["Buff Position Y-Offset"], C.unitframes[c], "buffoffy")
+        CreateConfig(U[c], T["Buff Position X-Offset"], C.unitframes[c], "buffoffx")
+        CreateConfig(U[c], T["Buff Position Y-Offset"], C.unitframes[c], "buffoffy")
         CreateConfig(U[c], T["Buff Size"], C.unitframes[c], "buffsize")
         CreateConfig(U[c], T["Buff Spacing"], C.unitframes[c], "buffspacing", "dropdown", pfUI.gui.dropdowns.spacing)
-		    CreateConfig(U[c], T["Buff Limit"], C.unitframes[c], "bufflimit")
+        CreateConfig(U[c], T["Buff Limit"], C.unitframes[c], "bufflimit")
         CreateConfig(U[c], T["Buffs Per Row"], C.unitframes[c], "buffperrow")
 
         CreateConfig(U[c], T["Debuffs"], nil, nil, "header")
         CreateConfig(U[c], T["Debuff Position"], C.unitframes[c], "debuffs", "dropdown", pfUI.gui.dropdowns.uf_buff_position)
         CreateConfig(U[c], T["Buff Position X-Offset"], C.unitframes[c], "debuffoffx")
-		    CreateConfig(U[c], T["Buff Position Y-Offset"], C.unitframes[c], "debuffoffy")
-		    CreateConfig(U[c], T["Debuff Size"], C.unitframes[c], "debuffsize")
+        CreateConfig(U[c], T["Buff Position Y-Offset"], C.unitframes[c], "debuffoffy")
+        CreateConfig(U[c], T["Debuff Size"], C.unitframes[c], "debuffsize")
         CreateConfig(U[c], T["Buff Spacing"], C.unitframes[c], "debuffspacing", "dropdown", pfUI.gui.dropdowns.spacing)
-	    	CreateConfig(U[c], T["Debuff Limit"], C.unitframes[c], "debufflimit")
+        CreateConfig(U[c], T["Debuff Limit"], C.unitframes[c], "debufflimit")
         CreateConfig(U[c], T["Debuffs Per Row"], C.unitframes[c], "debuffperrow")
 
         CreateConfig(U[c], T["Combat/Aggro Indicators"], nil, nil, "header")
@@ -2465,8 +2467,8 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
       CreateConfig(nil, T["Zone Text Size"], C.appearance.minimap, "zonetext_size")
       CreateConfig(nil, T["Zone Text Padding"], C.appearance.minimap, "zonetext_padding")
 	  
-	    CreateConfig(nil, T["Coordinates"], nil, nil, "header")
-	    CreateConfig(nil, T["Coordinates On Minimap"], C.appearance.minimap, "coordstext", "dropdown", pfUI.gui.dropdowns.minimap_cords_visibility)
+      CreateConfig(nil, T["Coordinates"], nil, nil, "header")
+      CreateConfig(nil, T["Coordinates On Minimap"], C.appearance.minimap, "coordstext", "dropdown", pfUI.gui.dropdowns.minimap_cords_visibility)
       CreateConfig(nil, T["Coordinates Location"], C.appearance.minimap, "coords_loc", "dropdown", pfUI.gui.dropdowns.minimap_cords_position)
       CreateConfig(nil, T["Coordinates Text Size"], C.appearance.minimap, "coords_size")
       CreateConfig(nil, T["Coordinates Text X Offset"], C.appearance.minimap, "coords_offx")
@@ -2494,16 +2496,16 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
       CreateConfig(U["buff"], T["Enable Debuff Display"], C.buffs, "debuffs", "checkbox")
       CreateConfig(U["buff"], T["Enable Weapon Buff Display"], C.buffs, "weapons", "checkbox")
       CreateConfig(U["buff"], T["Seperate Weapon Buffs"], C.buffs, "separateweapons", "checkbox")
-	    CreateConfig(nil) -- spacer
+      CreateConfig(nil) -- spacer
       CreateConfig(U["buff"], T["Buff Icon Size"], C.buffs, "size")
       CreateConfig(U["buff"], T["Buff Icon Spacing"], C.buffs, "spacing")
-	    CreateConfig(nil) -- spacer
+      CreateConfig(nil) -- spacer
       CreateConfig(U["buff"], T["Number Of Weapon Buffs Per Row"], C.buffs, "wepbuffrowsize")
       CreateConfig(U["buff"], T["Number Of Buffs Per Row"], C.buffs, "buffrowsize")
       CreateConfig(U["buff"], T["Number Of Debuffs Per Row"], C.buffs, "debuffrowsize")
-	    CreateConfig(nil) -- spacer
+      CreateConfig(nil) -- spacer
       CreateConfig(U["buff"], T["Buff Duration Position"], C.buffs, "text_pos", "dropdown", pfUI.gui.dropdowns.buff_duration_position)
-	    CreateConfig(U["buff"], T["Buff Duration Y-Offset"], C.buffs, "text_offy")
+      CreateConfig(U["buff"], T["Buff Duration Y-Offset"], C.buffs, "text_offy")
       CreateConfig(U["buff"], T["Buff Duration Size"], C.buffs, "text_size")
     end)
 
