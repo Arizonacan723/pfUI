@@ -1163,9 +1163,9 @@ pfUI:RegisterModule("gui", "vanilla:tbc", function ()
         "off:" .. T["Disable"]
       },
       ["buff_duration_position"] = {
-        "CENTER" .. T["Inside"],
-        "TOP:" .. T["Above"],
         "BOTTOM:" .. T["Below"],
+		    "TOP:" .. T["Above"],
+		    "CENTER:" .. T["Inside"],
       },
       ["positions"] = {
         "TOPLEFT:" .. T["Top Left"],
