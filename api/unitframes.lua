@@ -735,11 +735,14 @@ function pfUI.uf:UpdateConfig()
     f.power.bar:SetStatusBarBackgroundTexture(cr,cg,cb,ca)
   end
 
-  local fontname, fontsize, fontstyle
+  local fontname, fontsize, fontstyle--, fontshadowcolor, fontshadowoffx, fontshadowoffy
   if f.config.customfont == "1" then
     fontname = pfUI.media[f.config.customfont_name]
     fontsize = tonumber(f.config.customfont_size)
     fontstyle = f.config.customfont_style
+	-- fontshadowcolor = f.config.customfont_shadowcolor
+	-- fontshadowoffx = f.config.customfont_shadowoffx
+	-- fontshadowoffx = f.config.customfont_shadowoffx
   else
     fontname = pfUI.font_unit
     fontsize = tonumber(C.global.font_unit_size)
@@ -836,6 +839,10 @@ function pfUI.uf:UpdateConfig()
   f.hpLeftText:SetFontObject(GameFontWhite)
   f.hpLeftText:SetFont(fontname, fontsize, fontstyle)
   f.hpLeftText:SetJustifyH("LEFT")
+  if f.config.customfont == "1" then
+    f.hpLeftText:SetShadowColor(GetStringColor(f.config.customfont_shadowcolor))
+    f.hpLeftText:SetShadowOffset(f.config.customfont_shadowoffx, f.config.customfont_shadowoffy)
+  end
   f.hpLeftText:ClearAllPoints()
   f.hpLeftText:SetPoint("TOPLEFT",f.hp.bar, "TOPLEFT", 2*(default_border + f.config.txthpleftoffx), 1 + tonumber(f.config.txthpleftoffy))
   f.hpLeftText:SetPoint("BOTTOMRIGHT",f.hp.bar, "BOTTOMRIGHT", -2*(default_border + f.config.txthpleftoffx), f.config.txthpleftoffy)
@@ -843,6 +850,10 @@ function pfUI.uf:UpdateConfig()
   f.hpRightText:SetFontObject(GameFontWhite)
   f.hpRightText:SetFont(fontname, fontsize, fontstyle)
   f.hpRightText:SetJustifyH("RIGHT")
+  if f.config.customfont == "1" then
+    f.hpRightText:SetShadowColor(GetStringColor(f.config.customfont_shadowcolor))
+    f.hpRightText:SetShadowOffset(f.config.customfont_shadowoffx, f.config.customfont_shadowoffy)
+  end
   f.hpRightText:ClearAllPoints()
   f.hpRightText:SetPoint("TOPLEFT",f.hp.bar, "TOPLEFT", 2*(default_border + f.config.txthprightoffx), 1 + tonumber(f.config.txthprightoffy))
   f.hpRightText:SetPoint("BOTTOMRIGHT",f.hp.bar, "BOTTOMRIGHT", -2*(default_border + f.config.txthprightoffx), f.config.txthprightoffy)
@@ -850,6 +861,10 @@ function pfUI.uf:UpdateConfig()
   f.hpCenterText:SetFontObject(GameFontWhite)
   f.hpCenterText:SetFont(fontname, fontsize, fontstyle)
   f.hpCenterText:SetJustifyH("CENTER")
+  if f.config.customfont == "1" then
+    f.hpCenterText:SetShadowColor(GetStringColor(f.config.customfont_shadowcolor))
+    f.hpCenterText:SetShadowOffset(f.config.customfont_shadowoffx, f.config.customfont_shadowoffy)
+  end
   f.hpCenterText:ClearAllPoints()
   f.hpCenterText:SetPoint("TOPLEFT",f.hp.bar, "TOPLEFT", f.config.txthpcenteroffx, 1 + tonumber(f.config.txthpcenteroffy))
   f.hpCenterText:SetPoint("BOTTOMRIGHT",f.hp.bar, "BOTTOMRIGHT", f.config.txthpcenteroffx, f.config.txthpcenteroffy)
@@ -857,6 +872,10 @@ function pfUI.uf:UpdateConfig()
   f.powerLeftText:SetFontObject(GameFontWhite)
   f.powerLeftText:SetFont(fontname, fontsize, fontstyle)
   f.powerLeftText:SetJustifyH("LEFT")
+  if f.config.customfont == "1" then
+    f.powerLeftText:SetShadowColor(GetStringColor(f.config.customfont_shadowcolor))
+    f.powerLeftText:SetShadowOffset(f.config.customfont_shadowoffx, f.config.customfont_shadowoffy)
+  end
   f.powerLeftText:ClearAllPoints()
   f.powerLeftText:SetPoint("TOPLEFT",f.power.bar, "TOPLEFT", 2*(default_border + f.config.txtpowerleftoffx), 1 + tonumber(f.config.txtpowerleftoffy))
   f.powerLeftText:SetPoint("BOTTOMRIGHT",f.power.bar, "BOTTOMRIGHT", -2*(default_border + f.config.txtpowerleftoffx), f.config.txtpowerleftoffy)
@@ -864,6 +883,10 @@ function pfUI.uf:UpdateConfig()
   f.powerRightText:SetFontObject(GameFontWhite)
   f.powerRightText:SetFont(fontname, fontsize, fontstyle)
   f.powerRightText:SetJustifyH("RIGHT")
+  if f.config.customfont == "1" then
+    f.powerRightText:SetShadowColor(GetStringColor(f.config.customfont_shadowcolor))
+    f.powerRightText:SetShadowOffset(f.config.customfont_shadowoffx, f.config.customfont_shadowoffy)
+  end
   f.powerRightText:ClearAllPoints()
   f.powerRightText:SetPoint("TOPLEFT",f.power.bar, "TOPLEFT", 2*(default_border + f.config.txtpowerrightoffx), 1 + tonumber(f.config.txtpowerrightoffy))
   f.powerRightText:SetPoint("BOTTOMRIGHT",f.power.bar, "BOTTOMRIGHT", -2*(default_border + f.config.txtpowerrightoffx), f.config.txtpowerrightoffy)
@@ -871,6 +894,10 @@ function pfUI.uf:UpdateConfig()
   f.powerCenterText:SetFontObject(GameFontWhite)
   f.powerCenterText:SetFont(fontname, fontsize, fontstyle)
   f.powerCenterText:SetJustifyH("CENTER")
+  if f.config.customfont == "1" then
+    f.powerCenterText:SetShadowColor(GetStringColor(f.config.customfont_shadowcolor))
+    f.powerCenterText:SetShadowOffset(f.config.customfont_shadowoffx, f.config.customfont_shadowoffy)
+  end
   f.powerCenterText:ClearAllPoints()
   f.powerCenterText:SetPoint("TOPLEFT",f.power.bar, "TOPLEFT", f.config.txtpowercenteroffx, 1 + tonumber(f.config.txtpowercenteroffy))
   f.powerCenterText:SetPoint("BOTTOMRIGHT",f.power.bar, "BOTTOMRIGHT", f.config.txtpowercenteroffx, f.config.txtpowercenteroffy)

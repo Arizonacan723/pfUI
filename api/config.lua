@@ -339,7 +339,9 @@ function pfUI:LoadConfig()
   pfUI:UpdateConfig("unitframes", "player",      "display_sp_color",          "")
   
   pfUI:UpdateConfig("unitframes", "player",      "layout",           "default")
+  pfUI:UpdateConfig("unitframes", "player",      "caption_height",   "14")
   pfUI:UpdateConfig("unitframes", "target",      "layout",           "default")
+  pfUI:UpdateConfig("unitframes", "target",      "caption_height",   "14")
 
   pfUI:UpdateConfig("unitframes", "focus",       "width",            "120")
   pfUI:UpdateConfig("unitframes", "focus",       "height",           "34")
@@ -594,6 +596,9 @@ function pfUI:LoadConfig()
     pfUI:UpdateConfig("unitframes", unit,      "customfont_name",  "Interface\\AddOns\\pfUI\\fonts\\BigNoodleTitling.ttf")
     pfUI:UpdateConfig("unitframes", unit,      "customfont_size",  "12")
     pfUI:UpdateConfig("unitframes", unit,      "customfont_style", "OUTLINE")
+    pfUI:UpdateConfig("unitframes", unit,      "customfont_shadowcolor", "0,0,0,1")
+    pfUI:UpdateConfig("unitframes", unit,      "customfont_shadowoffx",  "1")
+    pfUI:UpdateConfig("unitframes", unit,      "customfont_shadowoffy",  "-1")
   end
 
   pfUI:UpdateConfig("bars",       "bar1",        "pageable",         "1")
