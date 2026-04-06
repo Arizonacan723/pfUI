@@ -968,7 +968,9 @@ end
     local plate_width = C.nameplates.width + 50
     local plate_height = C.nameplates.heighthealth + font_size + 5
     local plate_height_cast = C.nameplates.heighthealth + font_size + 5 + C.nameplates.heightcast + 5
-    local combo_size = 5
+    -- local combo_size = 5
+    -- adjust combo point size relative to nameplate width
+    local combo_size = (C.nameplates.width-default_border*12)/5--combo point size relative to nameplate width
 
     local width = tonumber(C.nameplates.width)
     local debuffsize = tonumber(C.nameplates.debuffsize)
@@ -1020,7 +1022,9 @@ end
 
     for i=1,5 do
       nameplate.combopoints[i]:SetWidth(combo_size)
-      nameplate.combopoints[i]:SetHeight(combo_size)
+      -- nameplate.combopoints[i]:SetHeight(combo_size)
+      -- separate combopoint height
+      nameplate.combopoints[i]:SetHeight(5)
       nameplate.combopoints[i]:SetPoint("TOPRIGHT", nameplate.health, "BOTTOMRIGHT", -(i-1)*(combo_size+default_border*3), -default_border*3)
       CreateBackdrop(nameplate.combopoints[i], default_border)
     end
