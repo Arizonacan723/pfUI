@@ -907,7 +907,7 @@ end
       end
       nameplate.combopoints = combopoints
     end
-
+    
     do -- castbar
       local castbar = CreateFrame("StatusBar", nil, nameplate.health)
       castbar:Hide()
@@ -968,10 +968,6 @@ end
     local plate_width = C.nameplates.width + 50
     local plate_height = C.nameplates.heighthealth + font_size + 5
     local plate_height_cast = C.nameplates.heighthealth + font_size + 5 + C.nameplates.heightcast + 5
-    -- local combo_size = 5
-    -- adjust combo point size relative to nameplate width
-    local combo_size = (C.nameplates.width-default_border*12)/5--combo point size relative to nameplate width
-
     local width = tonumber(C.nameplates.width)
     local debuffsize = tonumber(C.nameplates.debuffsize)
     local healthoffset = tonumber(C.nameplates.health.offset)
@@ -1020,13 +1016,34 @@ end
       UpdateDebuffConfig(nameplate, i)
     end
 
-    for i=1,5 do
-      nameplate.combopoints[i]:SetWidth(combo_size)
-      -- nameplate.combopoints[i]:SetHeight(combo_size)
-      -- separate combopoint height
-      nameplate.combopoints[i]:SetHeight(5)
-      nameplate.combopoints[i]:SetPoint("TOPRIGHT", nameplate.health, "BOTTOMRIGHT", -(i-1)*(combo_size+default_border*3), -default_border*3)
-      CreateBackdrop(nameplate.combopoints[i], default_border)
+    if C.nameplates.cp_position ~= "off" then
+      local combo_width = tonumber(C.nameplates.cp_width)
+      local combo_height = tonumber(C.nameplates.cp_height)
+      local combo_position = C.nameplates.cp_position
+      local combo_anchor, combo_offy, combo_invert
+      if combo_position == "TOPLEFT" then
+        combo_anchor = "BOTTOMLEFT"
+        combo_offy = default_border*3
+        combo_invert = 1
+      elseif combo_position == "TOPRIGHT" then
+        combo_anchor = "BOTTOMRIGHT"
+        combo_offy = default_border*3
+        combo_invert = -1
+      elseif combo_position == "BOTTOMLEFT" then
+        combo_anchor = "TOPLEFT"
+        combo_offy = -default_border*3
+        combo_invert = 1
+      else
+        combo_anchor = "TOPRIGHT"
+        combo_offy = -default_border*3
+        combo_invert = -1
+      end
+      for i=1,5 do
+        nameplate.combopoints[i]:SetWidth(combo_width)
+        nameplate.combopoints[i]:SetHeight(combo_height)
+        nameplate.combopoints[i]:SetPoint(combo_anchor, nameplate.health, combo_position, combo_invert*(i-1)*(combo_width+default_border*3), combo_offy)
+        CreateBackdrop(nameplate.combopoints[i], default_border)
+      end
     end
 
     nameplate.castbar:SetPoint("TOPLEFT", nameplate.health, "BOTTOMLEFT", 0, -default_border*3)
@@ -1304,7 +1321,7 @@ end
 
     -- update combopoints
     for i=1, 5 do plate.combopoints[i]:Hide() end
-    if target and C.nameplates.cpdisplay == "1" then
+    if target and C.nameplates.cp_position ~= "off" then
       for i=1, GetComboPoints("target") do plate.combopoints[i]:Show() end
     end
 
